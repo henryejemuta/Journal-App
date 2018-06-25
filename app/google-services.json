@@ -1,0 +1,55 @@
+{
+  "project_info": {
+    "project_number": "716414920858",
+    "firebase_url": "https://henryejemuta-alc3-journal-app.firebaseio.com",
+    "project_id": "henryejemuta-alc3-journal-app",
+    "storage_bucket": "henryejemuta-alc3-journal-app.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:716414920858:android:bf65b122b43fab4d",
+        "android_client_info": {
+          "package_name": "io.github.henryejemuta.journalapp"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "716414920858-1ka6uivjmocp9ai514k275m66jmlfq32.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "io.github.henryejemuta.journalapp",
+            "certificate_hash": "50de0141eae9246fbf2be9520b82593c632a8dd6"
+          }
+        },
+        {
+          "client_id": "716414920858-un2ffj1731veakf4c4hggqnf1r2a99kk.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyACR41gJXiYBYmd5MpsQrFpNhPRxPAYPRY"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "716414920858-un2ffj1731veakf4c4hggqnf1r2a99kk.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
