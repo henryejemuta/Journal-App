@@ -1,0 +1,100 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/background"
+    android:paddingLeft="@dimen/activity_padding"
+    android:paddingRight="@dimen/activity_padding"
+    tools:context=".login.LoginActivity">
+
+    <ImageView
+        android:id="@+id/app_logo"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:minWidth="100dp"
+        android:minHeight="103dp"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="@dimen/logo_top_margin"
+        android:contentDescription="@string/logo_description"
+        android:fontFamily="sans-serif-thin"
+        android:src="@mipmap/ic_launcher" />
+
+    <TextView
+        android:id="@+id/welcome_note"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/app_logo"
+        android:textAlignment="center"
+        android:textColor="@color/colorWhite"
+        android:layout_marginTop="@dimen/activity_vertical_margin"
+        android:textStyle="bold"
+        android:textSize="30sp"
+        android:text="@string/welcome"/>
+
+    <LinearLayout
+        android:id="@+id/ll_user_id_container"
+        android:layout_below="@+id/welcome_note"
+        style="@style/login_input_fields_container">
+
+        <io.github.henryejemuta.journalapp.widget.IconTextView
+            android:text="@string/icon_user"
+            style="@style/login_input_fields_icon" />
+
+        <EditText
+            android:id="@+id/et_login_user_id"
+            android:hint="@string/email"
+            android:imeActionLabel="Password"
+            android:inputType="textEmailAddress"
+            style="@style/login_input_fields" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/ll_user_password_container"
+        android:layout_below="@+id/ll_user_id_container"
+        style="@style/login_input_fields_container">
+
+        <io.github.henryejemuta.journalapp.widget.IconTextView
+            android:text="@string/icon_lock"
+            style="@style/login_input_fields_icon"/>
+
+        <EditText
+            android:id="@+id/et_login_password"
+            android:hint="@string/enter_password"
+            android:imeActionLabel="Login"
+            android:inputType="textPassword"
+            style="@style/login_input_fields"/>
+    </LinearLayout>
+    
+    <Button
+        android:id="@+id/button_login"
+        android:layout_below="@+id/ll_user_password_container"
+        android:layout_width="@dimen/login_input_width"
+        android:layout_height="35dp"
+        android:text="@string/login"
+        android:textColor="@color/colorWhite"
+        android:background="@drawable/button_background"
+        android:textStyle="bold"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="@dimen/activity_vertical_margin"/>
+
+    <Button
+        android:id="@+id/button_google_login"
+        android:layout_below="@+id/button_login"
+        android:layout_width="@dimen/login_input_width"
+        android:layout_height="40dp"
+        android:text="@string/sign_in_with_google"
+        android:fontFamily="Roboto-Medium"
+        android:paddingLeft="24dp"
+        android:layout_centerHorizontal="true"
+        android:textColor="@color/colorWhite"
+        android:textStyle="bold"
+        android:layout_marginTop="@dimen/activity_vertical_margin"
+        android:background="@drawable/google_sign_in"
+        />
+
+    <io.github.henryejemuta.journalapp.widget.IconTextView
+        android:text="@string/forgot_password"
+        style="@style/login_input_fields_icon" />
+
+</RelativeLayout>
