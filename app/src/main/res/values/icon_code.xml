@@ -7,4 +7,5 @@
     <string name="icon_checkbox_checked">&#xf046;</string>
     <string name="icon_eye">&#xf06e;</string>
     <string name="icon_eye_closed">&#xf070;</string>
+    <string name="icon_user_plus">&#xf234;</string>
 </resources>
