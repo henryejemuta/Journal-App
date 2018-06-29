@@ -114,6 +114,7 @@ public class LoginActivity extends AppCompatActivity implements LoginContract.Vi
         mFirebaseAuth.addAuthStateListener(mAuthStateListener);
     }
 
+
     @Override
     public void showEmailError(String msg) {
         mUserEmail.setError(msg);
@@ -153,13 +154,13 @@ public class LoginActivity extends AppCompatActivity implements LoginContract.Vi
     @Override
     public void showSignUp() {
         startActivity(new Intent(this, SignUpActivity.class));
-//        LoginActivity.this.finish(); //Don't Finish so user can go back to loginWithEmailAndPassword by hitting back
+        LoginActivity.this.finish();
     }
 
     @Override
     public void showForgotPassword() {
         startActivity(new Intent(this, ResetPasswordActivity.class));
-//        LoginActivity.this.finish(); //Don't Finish so user can go back to loginWithEmailAndPassword by hitting back
+        LoginActivity.this.finish();
     }
 
     @Override

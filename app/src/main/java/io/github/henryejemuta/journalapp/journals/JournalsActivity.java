@@ -13,12 +13,16 @@ import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
+import android.widget.Toast;
 
 import io.github.henryejemuta.journalapp.R;
+import io.github.henryejemuta.journalapp.database.AppDatabase;
 import io.github.henryejemuta.journalapp.util.EspressoIdlingResource;
 
 public class JournalsActivity extends AppCompatActivity {
     private DrawerLayout mDrawerLayout;
+
+    private AppDatabase mAppDatabase;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -30,13 +34,17 @@ public class JournalsActivity extends AppCompatActivity {
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         ActionBar ab = getSupportActionBar();
-        ab.setHomeAsUpIndicator(R.drawable.ic_menu);
-        ab.setDisplayHomeAsUpEnabled(true);
+        try {
+            ab.setHomeAsUpIndicator(R.drawable.ic_menu);
+            ab.setDisplayHomeAsUpEnabled(true);
+        }catch (NullPointerException e){
+            Toast.makeText(this, e.getMessage(), Toast.LENGTH_LONG).show();
+        }
 
         // Set up the navigation drawer.
         mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
         mDrawerLayout.setStatusBarBackground(R.color.colorPrimaryDark);
-        NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
+        NavigationView navigationView = (NavigationView) findViewById(R.id.fab_j_nav_view);
         if (navigationView != null) {
             setupDrawerContent(navigationView);
         }
@@ -44,13 +52,15 @@ public class JournalsActivity extends AppCompatActivity {
         if (null == savedInstanceState) {
             initFragment(JournalsFragment.newInstance());
         }
+
+        mAppDatabase = AppDatabase.getInstance(getApplicationContext());
     }
 
     private void initFragment(Fragment JournalsFragment) {
         // Add the JournalsFragment to the layout
         FragmentManager fragmentManager = getSupportFragmentManager();
         FragmentTransaction transaction = fragmentManager.beginTransaction();
-        transaction.add(R.id.contentFrame, JournalsFragment);
+        transaction.add(R.id.fl_j_contentFrame, JournalsFragment);
         transaction.commit();
     }
 

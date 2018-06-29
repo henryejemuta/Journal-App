@@ -20,4 +20,7 @@
     <string name="email_verification_heading_instruction">Kindly, verify your email now to start using eJournal. To verify, simply click on the \'Verify Email\' button; and follow the instruction in the received email.</string>
     <string name="reset_password">Reset Password</string>
     <string name="enter_password_to_reset">Enter your email below to receive pasword reset link.</string>
+    <string name="title_hint">Title</string>
+    <string name="description_hint">Journal Details/Description</string>
+    <string name="successfully_saved_journal_message">Journal Saved!</string>
 </resources>

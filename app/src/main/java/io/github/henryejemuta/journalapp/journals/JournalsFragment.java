@@ -20,7 +20,6 @@ import android.widget.TextView;
 import java.util.ArrayList;
 import java.util.List;
 
-import io.github.henryejemuta.journalapp.Injection;
 import io.github.henryejemuta.journalapp.R;
 import io.github.henryejemuta.journalapp.addjournal.AddJournalActivity;
 import io.github.henryejemuta.journalapp.common.Journal;
@@ -86,7 +85,7 @@ public class JournalsFragment extends Fragment implements JournalsContract.View 
         recyclerView.setLayoutManager(new GridLayoutManager(getContext(), numColumns));
 
         // Set up floating action button
-        FloatingActionButton fab = (FloatingActionButton) getActivity().findViewById(R.id.fab_add_journals);
+        FloatingActionButton fab = (FloatingActionButton) getActivity().findViewById(R.id.fab_j_add_journal);
 
         fab.setImageResource(R.drawable.ic_add);
         fab.setOnClickListener(new View.OnClickListener() {
@@ -127,8 +126,7 @@ public class JournalsFragment extends Fragment implements JournalsContract.View 
         if (getView() == null) {
             return;
         }
-        final SwipeRefreshLayout srl =
-                (SwipeRefreshLayout) getView().findViewById(R.id.refresh_layout);
+        final SwipeRefreshLayout srl = (SwipeRefreshLayout) getView().findViewById(R.id.srl_refresh_layout);
 
         // Make sure setRefreshing() is called after the layout is done with everything else.
         srl.post(new Runnable() {
@@ -174,7 +172,7 @@ public class JournalsFragment extends Fragment implements JournalsContract.View 
         public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
             Context context = parent.getContext();
             LayoutInflater inflater = LayoutInflater.from(context);
-            View journalView = inflater.inflate(R.layout.item_journal, parent, false);
+            View journalView = inflater.inflate(R.layout.journal_item_view, parent, false);
 
             return new ViewHolder(journalView, mItemListener);
         }
@@ -215,8 +213,8 @@ public class JournalsFragment extends Fragment implements JournalsContract.View 
             public ViewHolder(View itemView, JournalItemListener listener) {
                 super(itemView);
                 mItemListener = listener;
-                title = (TextView) itemView.findViewById(R.id.journal_detail_title);
-                description = (TextView) itemView.findViewById(R.id.journal_detail_description);
+                title = (TextView) itemView.findViewById(R.id.tv_jd_title);
+                description = (TextView) itemView.findViewById(R.id.tv_jd_description);
                 itemView.setOnClickListener(this);
             }
 

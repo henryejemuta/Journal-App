@@ -4,6 +4,7 @@ import android.arch.persistence.room.ColumnInfo;
 import android.arch.persistence.room.Entity;
 import android.arch.persistence.room.Ignore;
 import android.arch.persistence.room.PrimaryKey;
+import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 
 import java.util.Date;
@@ -12,9 +13,13 @@ import java.util.UUID;
 @Entity(tableName = "journal")
 public class Journal {
 
-    @PrimaryKey
+    @PrimaryKey(autoGenerate = true)
     @ColumnInfo(name = "id")
-    private String mId;
+    private long mId;
+
+    @NonNull
+    @ColumnInfo(name = "unique_id")
+    private String mUniqueId;
 
     @ColumnInfo(name = "title")
     private final String mTitle;
@@ -44,7 +49,7 @@ public class Journal {
 
     @Ignore
     public Journal(String title, @Nullable String description, @Nullable String imageUrl, int priorityColor, double latitude, double longitude, Date dateCreated, Date dateLastUpdated) {
-        mId = UUID.randomUUID().toString();
+        mUniqueId = UUID.randomUUID().toString();
         mTitle = title;
         mDescription = description;
         mImageUrl = imageUrl;
@@ -55,8 +60,9 @@ public class Journal {
         mDateLastUpdated = dateLastUpdated;
     }
 
-    public Journal(String id, String title, @Nullable String description, @Nullable String imageUrl, int priorityColor, double latitude, double longitude, Date dateCreated, Date dateLastUpdated) {
+    public Journal(long id, @NonNull String uniqueId, String title, @Nullable String description, @Nullable String imageUrl, int priorityColor, double latitude, double longitude, Date dateCreated, Date dateLastUpdated) {
         mId = id;
+        mUniqueId = uniqueId;
         mTitle = title;
         mDescription = description;
         mImageUrl = imageUrl;
@@ -67,8 +73,12 @@ public class Journal {
         mDateLastUpdated = dateLastUpdated;
     }
 
-    public String getId() {
+    public long getId() {
         return mId;
+    }
+
+    public String getUniqueId() {
+        return mUniqueId;
     }
 
     public String getTitle() {
@@ -85,23 +95,23 @@ public class Journal {
         return mImageUrl;
     }
 
-    public int getmPriorityColor() {
+    public int getPriorityColor() {
         return mPriorityColor;
     }
 
-    public double getmLatitude() {
+    public double getLatitude() {
         return mLatitude;
     }
 
-    public double getmLongitude() {
+    public double getLongitude() {
         return mLongitude;
     }
 
-    public Date getmDateCreated() {
+    public Date getDateCreated() {
         return mDateCreated;
     }
 
-    public Date getmDateLastUpdated() {
+    public Date getDateLastUpdated() {
         return mDateLastUpdated;
     }
 

@@ -7,4 +7,5 @@
     <color name="colorTransparentBlack">#7d000000</color>
     <color name="colorTransparentPrimaryDark">#7d303F9F</color>
     <color name="colorWhite">#FFFFFF</color>
+    <color name="colorAddJournalBackground">#FFFFFF</color>
 </resources>

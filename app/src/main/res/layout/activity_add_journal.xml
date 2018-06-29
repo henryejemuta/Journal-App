@@ -6,8 +6,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".journals.JournalsActivity"
-    tools:openDrawer="start">
+    tools:context=".addjournal.AddJournalActivity">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -15,7 +14,7 @@
         android:orientation="vertical">
 
         <android.support.v7.widget.Toolbar
-            android:id="@+id/tb_j_toolbar"
+            android:id="@+id/toolbar"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="@color/colorPrimary"
@@ -24,37 +23,26 @@
             />
 
         <android.support.design.widget.CoordinatorLayout
-            android:id="@+id/cl_j_coordinatorLayout"
+            android:id="@+id/cl_aj_coordinatorLayout"
             android:layout_width="match_parent"
             android:layout_height="match_parent">
 
             <FrameLayout
-                android:id="@+id/fl_j_contentFrame"
+                android:id="@+id/fl_aj_contentFrame"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"/>
 
             <android.support.design.widget.FloatingActionButton
-                android:id="@+id/fab_j_add_journal"
+                android:id="@+id/fab_aj_journals"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_margin="@dimen/fab_margin"
                 android:src="@drawable/ic_add"
                 app:fabSize="normal"
-                app:layout_anchor="@id/fl_j_contentFrame"
+                app:layout_anchor="@id/fl_aj_contentFrame"
                 app:layout_anchorGravity="bottom|right|end"/>
         </android.support.design.widget.CoordinatorLayout>
 
     </LinearLayout>
-
-    <!-- Navigation Drawer -->
-    <android.support.design.widget.NavigationView
-        android:id="@+id/fab_j_nav_view"
-        android:layout_width="wrap_content"
-        android:layout_height="match_parent"
-        android:layout_gravity="start"
-        android:fitsSystemWindows="true"
-        app:headerLayout="@layout/journals_nav_header"
-        app:menu="@menu/journals_activity_drawer"/>
-
 
 </android.support.v4.widget.DrawerLayout>

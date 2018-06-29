@@ -7,8 +7,7 @@ import android.arch.persistence.room.Ignore;
 import android.arch.persistence.room.Index;
 import android.arch.persistence.room.PrimaryKey;
 
-@Entity(tableName = "journal_tag", indices = {@Index("tags"),
-        @Index(value = {"order_id", "item_id"})},
+@Entity(tableName = "journal_tag", indices = {@Index("journal_id"), @Index("tag_id")},
         foreignKeys = {@ForeignKey(entity = Journal.class, parentColumns = "id", childColumns = "journal_id"),
                 @ForeignKey(entity = Tag.class, parentColumns = "id", childColumns = "tag_id")})
 public class JournalTag {

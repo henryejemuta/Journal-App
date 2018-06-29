@@ -30,8 +30,11 @@ public interface JournalDAO {
     @Delete
     void deleteJournal(Journal taskEntry);
 
-    @Query("SELECT * FROM journal WHERE id = :id  ORDER BY date_last_modified")
-    LiveData<Journal> loadJournalById(String id);
+    @Query("SELECT * FROM journal WHERE id = :id")
+    LiveData<Journal> loadJournalById(long id);
+
+    @Query("SELECT * FROM journal WHERE unique_id = :uniqueID")
+    LiveData<Journal> loadJournalByStringID(String uniqueID);
 
     @Query("SELECT * FROM journal WHERE lat = :lat AND lon = :lon  ORDER BY date_last_modified")
     LiveData<List<Journal>> loadJournalsByLonAndLat(long lat, long lon);
@@ -42,7 +45,7 @@ public interface JournalDAO {
     @Query("SELECT * FROM journal WHERE lon = :lon  ORDER BY date_last_modified")
     LiveData<List<Journal>> loadJournalsByLongitude(long lon);
 
-    @Query("SELECT j.id, j.title, j.description, j.image_url, j.priority_color, j.lat, j.lon, j.date_created, j.date_last_modified FROM journal j JOIN journal_tag jt ON jt.journal_id = j.id JOIN tag t ON t.id = jt.tag_id WHERE t.tag = :tag  ORDER BY j.date_last_modified")
+    @Query("SELECT j.id, j.unique_id, j.title, j.description, j.image_url, j.priority_color, j.lat, j.lon, j.date_created, j.date_last_modified FROM journal j JOIN journal_tag jt ON jt.journal_id = j.id JOIN tag t ON t.id = jt.tag_id WHERE t.tag = :tag  ORDER BY j.date_last_modified")
     LiveData<List<Journal>> loadJournalsByTag(String tag);
 
     @Query("SELECT * FROM journal WHERE priority_color = :color  ORDER BY date_last_modified")
@@ -67,8 +70,8 @@ public interface JournalDAO {
     @Query("SELECT * FROM tag WHERE id = :id  ORDER BY id")
     LiveData<Tag> loadTagsById(int id);
 
-    @Query("SELECT * FROM tag t JOIN journal_tag jt ON jt.journal_id = t.id JOIN journal j ON j.id = jt.journal_id WHERE j.id = :id  ORDER BY id")
-    LiveData<Tag> loadTagsByJournalId(String id);
+    @Query("SELECT t.id, t.tag FROM tag t JOIN journal_tag jt ON jt.journal_id = t.id JOIN journal j ON j.id = jt.journal_id WHERE j.id = :id  ORDER BY t.id")
+    LiveData<List<Tag>> loadTagsByJournalId(long id);
 //===================================================================
 
 
@@ -86,7 +89,7 @@ public interface JournalDAO {
     @Delete
     void deleteJournalTag(JournalTag journalTagEntry);
 
-    @Query("SELECT * FROM tag WHERE id = :id  ORDER BY id")
+    @Query("SELECT * FROM journal_tag WHERE id = :id  ORDER BY id")
     LiveData<JournalTag> loadJournalTagById(int id);
 
 //===================================================================
