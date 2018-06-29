@@ -34,7 +34,10 @@ ext {
 
     // App dependencies
     supportLibraryVersion = '27.1.1'
+    aacVersion = '1.1.1' //Android Architecture Components
     firebaseVersion = '16.0.1'
+    firebaseAuthVersion = '16.0.2'
+    playServiceAuthVersion = '15.0.1'
     guavaVersion = '18.0'
     glideVersion = '3.6.1'
     junitVersion = '4.12'

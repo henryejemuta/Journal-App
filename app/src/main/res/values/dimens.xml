@@ -6,12 +6,13 @@
     <dimen name="activity_padding">15dp</dimen>
     <dimen name="logo_top_margin">75dp</dimen>
 
-    <dimen name="notes_activity_horizontal_margin">8dp</dimen>
-    <dimen name="notes_activity_vertical_margin">8dp</dimen>
+    <dimen name="journals_activity_horizontal_margin">8dp</dimen>
+    <dimen name="journals_activity_vertical_margin">8dp</dimen>
 
     <dimen name="fab_margin">16dp</dimen>
     <dimen name="edit_tex_padding">5dp</dimen>
     <dimen name="font_size">14sp</dimen>
     <dimen name="google_font_size">14px</dimen>
     <dimen name="login_input_width">300dp</dimen>
+
 </resources>

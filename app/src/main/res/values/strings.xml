@@ -9,4 +9,15 @@
     <string name="forgot_password">Forgot Password?</string>
     <string name="new_to_journal_app">New to eJournal?</string>
     <string name="signup_now">SignUp Now!</string>
+    <string name="already_have_an_account">Already Signed Up or You Have a Google Account?</string>
+    <string name="login_here">Login Here!</string>
+    <string name="sign_up">Sign Up</string>
+    <string name="welcome_to_ejournal">Welcome to eJournal</string>
+    <string name="sign_out">Sign Out</string>
+    <string name="verify_email">Verify Email</string>
+    <string name="app_credit">eJournal - ALC 3.0 \u00A9 2018</string>
+    <string name="email_verification_heading">Verify Your Email Now!</string>
+    <string name="email_verification_heading_instruction">Kindly, verify your email now to start using eJournal. To verify, simply click on the \'Verify Email\' button; and follow the instruction in the received email.</string>
+    <string name="reset_password">Reset Password</string>
+    <string name="enter_password_to_reset">Enter your email below to receive pasword reset link.</string>
 </resources>

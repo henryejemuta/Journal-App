@@ -35,7 +35,7 @@ android {
 
     // Remove mockRelease as it's not needed.
     android.variantFilter { variant ->
-        if(variant.buildType.name.equals('release') && variant.getFlavors().get(0).name.equals('mock')) {
+        if (variant.buildType.name.equals('release') && variant.getFlavors().get(0).name.equals('mock')) {
             variant.setIgnore(true);
         }
     }
@@ -45,6 +45,10 @@ android {
         testLogging {
             events 'passed', 'skipped', 'failed', 'standardOut', 'standardError'
         }
+    }
+    sourceSets {
+        mock { java.srcDirs = ['src/mock/java', 'src/mock/java/', 'src/mock/java/journals'] }
+        main { java.srcDirs = ['src/main/java', 'src/main/java/2'] }
     }
 }
 
@@ -56,16 +60,24 @@ dependencies {
     implementation "com.android.support:recyclerview-v7:$rootProject.supportLibraryVersion"
     implementation "com.android.support:support-v4:$rootProject.supportLibraryVersion"
 
+    // Dependencies for AAC
+    implementation "android.arch.persistence.room:runtime:$rootProject.aacVersion"
+    annotationProcessor "android.arch.persistence.room:compiler:$rootProject.aacVersion"
+    implementation "android.arch.lifecycle:extensions:$rootProject.aacVersion"
+    annotationProcessor "android.arch.lifecycle:compiler:$rootProject.aacVersion"
+
     // Dependencies for firebase
-    implementation 'com.google.firebase:firebase-core:16.0.1'
-    implementation 'com.google.firebase:firebase-database:16.0.1'
-    implementation 'com.google.firebase:firebase-auth:16.0.2'
-    implementation 'com.google.firebase:firebase-crash:16.0.1'
+    implementation "com.google.firebase:firebase-core:$rootProject.firebaseVersion"
+    implementation "com.google.firebase:firebase-database:$rootProject.firebaseVersion"
+    implementation "com.google.firebase:firebase-auth:$rootProject.firebaseAuthVersion"
+    implementation "com.google.android.gms:play-services-auth:$rootProject.playServiceAuthVersion"
+    implementation "com.google.firebase:firebase-crash:$rootProject.firebaseVersion"
+    implementation "com.google.firebase:firebase-dynamic-links:$rootProject.firebaseVersion"
+    implementation "com.google.firebase:firebase-storage:$rootProject.firebaseVersion"
 
     implementation "com.google.guava:guava:$rootProject.guavaVersion"
     implementation "com.github.bumptech.glide:glide:$rootProject.glideVersion"
     implementation "com.android.support.test.espresso:espresso-idling-resource:$rootProject.ext.espressoVersion"
-
 
     // Dependencies for local unit tests
     testImplementation "junit:junit:$rootProject.ext.junitVersion"

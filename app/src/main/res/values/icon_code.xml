@@ -8,4 +8,6 @@
     <string name="icon_eye">&#xf06e;</string>
     <string name="icon_eye_closed">&#xf070;</string>
     <string name="icon_user_plus">&#xf234;</string>
+    <string name="icon_sign_in">&#xf2f6;</string>
+    <string name="icon_at">&#xf1fa;</string>
 </resources>
