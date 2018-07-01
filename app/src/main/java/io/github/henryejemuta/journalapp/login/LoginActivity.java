@@ -168,5 +168,6 @@ public class LoginActivity extends AppCompatActivity implements LoginContract.Vi
         Intent intent = new Intent(this, SignUpActivity.class);
         intent.putExtra(Constants.SIGN_UP_ACTIVITY_VIEW_KEY, Constants.VERIFY_FRAGMENT);
         startActivity(intent);
+        LoginActivity.this.finish();
     }
 }

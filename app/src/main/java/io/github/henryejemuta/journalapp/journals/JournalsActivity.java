@@ -1,31 +1,39 @@
 package io.github.henryejemuta.journalapp.journals;
 
+import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
-import android.support.annotation.NonNull;
-import android.support.annotation.VisibleForTesting;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.NavigationView;
 import android.support.design.widget.Snackbar;
-import android.support.test.espresso.IdlingResource;
-import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentTransaction;
+import android.support.v4.content.ContextCompat;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
-import android.support.v7.app.ActionBar;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.Toast;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import io.github.henryejemuta.journalapp.R;
-import io.github.henryejemuta.journalapp.util.EspressoIdlingResource;
+import io.github.henryejemuta.journalapp.addjournal.AddJournalActivity;
+import io.github.henryejemuta.journalapp.common.Journal;
+import io.github.henryejemuta.journalapp.database.AppDatabase;
+import io.github.henryejemuta.journalapp.journaldetails.JournalDetailActivity;
 
-public class JournalsActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
-    private static final String TAG = JournalsActivity.class.getSimpleName();
+public class JournalsActivity extends AppCompatActivity
+        implements NavigationView.OnNavigationItemSelectedListener, JournalsContract.View {
+    private static final int REQUEST_ADD_JOURNAL = 1;
+
+    private JournalsContract.UserActionsListener mActionsListener;
+
+    private JournalAdapter mJournalAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -34,14 +42,12 @@ public class JournalsActivity extends AppCompatActivity implements NavigationVie
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
-            }
-        });
+
+        mJournalAdapter = new JournalAdapter(new ArrayList<Journal>(0), mItemListener);
+        mActionsListener = new JournalsPresenter(AppDatabase.getInstance(this), this);
+
+        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab_add_journals);
+        fab.setOnClickListener(mActionsListener.getOnClickListener());
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
@@ -52,18 +58,30 @@ public class JournalsActivity extends AppCompatActivity implements NavigationVie
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
 
-        if (null == savedInstanceState) {
-            initFragment(JournalsFragment.newInstance());
-        }
+
+        // Pull-to-refresh
+        SwipeRefreshLayout swipeRefreshLayout =
+                (SwipeRefreshLayout) findViewById(R.id.refresh_layout);
+        swipeRefreshLayout.setColorSchemeColors(
+                ContextCompat.getColor(this, R.color.colorPrimary),
+                ContextCompat.getColor(this, R.color.colorAccent),
+                ContextCompat.getColor(this, R.color.colorPrimaryDark));
+        swipeRefreshLayout.setOnRefreshListener(mActionsListener.getOnRefreshListener());
+
     }
 
+    @Override
+    protected void onResume() {
+        super.onResume();
+        mActionsListener.loadJournals(false);
+    }
 
-    private void initFragment(Fragment journalsFragment) {
-        // Add the JournalsFragment to the layout
-        FragmentManager fragmentManager = getSupportFragmentManager();
-        FragmentTransaction transaction = fragmentManager.beginTransaction();
-        transaction.add(R.id.contentFrame, journalsFragment);
-        transaction.commit();
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        // If a journal was successfully added, show Toast
+        if (REQUEST_ADD_JOURNAL == requestCode && Activity.RESULT_OK == resultCode) {
+            Toast.makeText(this, getString(R.string.successfully_saved_journal_message), Toast.LENGTH_LONG).show();
+        }
     }
 
     @Override
@@ -98,28 +116,65 @@ public class JournalsActivity extends AppCompatActivity implements NavigationVie
         return super.onOptionsItemSelected(item);
     }
 
-    @SuppressWarnings("StatementWithEmptyBody")
     @Override
     public boolean onNavigationItemSelected(MenuItem item) {
         // Handle navigation view item clicks here.
         int id = item.getItemId();
-
-        if (id == R.id.nav_camera) {
-            // Handle the camera action
-        } else if (id == R.id.nav_gallery) {
-
-        } else if (id == R.id.nav_slideshow) {
-
-        } else if (id == R.id.nav_manage) {
-
+        if (id == R.id.nav_gallery) {
+            Toast.makeText(this, "Show a gallery of all image current user have added to eJournal.", Toast.LENGTH_LONG).show();
+        } else if (id == R.id.nav_my_locations) {
+            Toast.makeText(this, "Show a with markers on place current user have added to eJournal.", Toast.LENGTH_LONG).show();
         } else if (id == R.id.nav_share) {
-
+            Toast.makeText(this, "Share link to download eJournal App with friends.", Toast.LENGTH_LONG).show();
         } else if (id == R.id.nav_send) {
-
+            Toast.makeText(this, "Share eJournal App APK with friends.", Toast.LENGTH_LONG).show();
         }
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
         return true;
+    }
+
+
+    /**
+     * Listener for clicks on journals in the RecyclerView.
+     */
+    JournalItemListener mItemListener = new JournalItemListener() {
+        @Override
+        public void onJournalClick(Journal clickedJournal) {
+            mActionsListener.openJournalDetails(clickedJournal);
+        }
+    };
+
+    @Override
+    public void setProgressIndicator(final boolean active) {
+        final SwipeRefreshLayout srl = (SwipeRefreshLayout) findViewById(R.id.refresh_layout);
+
+        // Make sure setRefreshing() is called after the layout is done with everything else.
+        srl.post(new Runnable() {
+            @Override
+            public void run() {
+                srl.setRefreshing(active);
+            }
+        });
+    }
+
+    @Override
+    public void showJournals(List<Journal> journals) {
+        mJournalAdapter.replaceData(journals);
+    }
+
+    @Override
+    public void showAddJournal() {
+        Intent intent = new Intent(this, AddJournalActivity.class);
+        startActivityForResult(intent, REQUEST_ADD_JOURNAL);
+    }
+
+    @Override
+    public void showJournalDetailUi(String journalId) {
+        Intent intent = new Intent(this, JournalDetailActivity.class);
+        intent.putExtra(JournalDetailActivity.EXTRA_JOURNAL_ID, journalId);
+        startActivity(intent);
+        finish();
     }
 }
