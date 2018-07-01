@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
@@ -12,6 +13,7 @@ import android.support.v4.content.ContextCompat;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -23,6 +25,7 @@ import java.util.List;
 import io.github.henryejemuta.journalapp.R;
 import io.github.henryejemuta.journalapp.addjournal.AddJournalActivity;
 import io.github.henryejemuta.journalapp.common.Journal;
+import io.github.henryejemuta.journalapp.database.AppDatabase;
 import io.github.henryejemuta.journalapp.journaldetails.JournalDetailActivity;
 
 import static com.google.common.base.Preconditions.checkNotNull;
@@ -46,13 +49,14 @@ public class JournalsFragment extends Fragment implements JournalsContract.View 
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         mListAdapter = new JournalsAdapter(new ArrayList<Journal>(0), mItemListener);
-//        mActionsListener = new JournalsPresenter(Injection.provideJournalsRepository(), this);
+        mActionsListener = new JournalsPresenter(AppDatabase.getInstance(getContext()), this);
     }
 
     @Override
     public void onResume() {
         super.onResume();
         mActionsListener.loadJournals(false);
+        Log.d(JournalsFragment.class.getSimpleName(), "onResume");
     }
 
     @Override
@@ -75,8 +79,8 @@ public class JournalsFragment extends Fragment implements JournalsContract.View 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        View root = inflater.inflate(R.layout.journals_view, container, false);
-        RecyclerView recyclerView = (RecyclerView) root.findViewById(R.id.rv_journal_list);
+        View root = inflater.inflate(R.layout.fragment_journals, container, false);
+        RecyclerView recyclerView = (RecyclerView) root.findViewById(R.id.journals_list);
         recyclerView.setAdapter(mListAdapter);
 
         int numColumns = getContext().getResources().getInteger(R.integer.num_journals_columns);
@@ -85,7 +89,8 @@ public class JournalsFragment extends Fragment implements JournalsContract.View 
         recyclerView.setLayoutManager(new GridLayoutManager(getContext(), numColumns));
 
         // Set up floating action button
-        FloatingActionButton fab = (FloatingActionButton) getActivity().findViewById(R.id.fab_j_add_journal);
+        FloatingActionButton fab =
+                (FloatingActionButton) getActivity().findViewById(R.id.fab);
 
         fab.setImageResource(R.drawable.ic_add);
         fab.setOnClickListener(new View.OnClickListener() {
@@ -96,7 +101,8 @@ public class JournalsFragment extends Fragment implements JournalsContract.View 
         });
 
         // Pull-to-refresh
-        SwipeRefreshLayout swipeRefreshLayout = (SwipeRefreshLayout) root.findViewById(R.id.srl_refresh_layout);
+        SwipeRefreshLayout swipeRefreshLayout =
+                (SwipeRefreshLayout) root.findViewById(R.id.refresh_layout);
         swipeRefreshLayout.setColorSchemeColors(
                 ContextCompat.getColor(getActivity(), R.color.colorPrimary),
                 ContextCompat.getColor(getActivity(), R.color.colorAccent),
@@ -126,7 +132,8 @@ public class JournalsFragment extends Fragment implements JournalsContract.View 
         if (getView() == null) {
             return;
         }
-        final SwipeRefreshLayout srl = (SwipeRefreshLayout) getView().findViewById(R.id.srl_refresh_layout);
+        final SwipeRefreshLayout srl =
+                (SwipeRefreshLayout) getView().findViewById(R.id.refresh_layout);
 
         // Make sure setRefreshing() is called after the layout is done with everything else.
         srl.post(new Runnable() {
@@ -144,7 +151,7 @@ public class JournalsFragment extends Fragment implements JournalsContract.View 
 
     @Override
     public void showAddJournal() {
-        Intent intent = new Intent(getContext(), AddJournalActivity.class);
+        Intent intent = new Intent(getContext(),AddJournalActivity.class);
         startActivityForResult(intent, REQUEST_ADD_JOURNAL);
     }
 
@@ -169,7 +176,7 @@ public class JournalsFragment extends Fragment implements JournalsContract.View 
         }
 
         @Override
-        public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+        public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
             Context context = parent.getContext();
             LayoutInflater inflater = LayoutInflater.from(context);
             View journalView = inflater.inflate(R.layout.journal_item_view, parent, false);
@@ -178,7 +185,7 @@ public class JournalsFragment extends Fragment implements JournalsContract.View 
         }
 
         @Override
-        public void onBindViewHolder(ViewHolder viewHolder, int position) {
+        public void onBindViewHolder(@NonNull ViewHolder viewHolder, int position) {
             Journal journal = mJournals.get(position);
 
             viewHolder.title.setText(journal.getTitle());
@@ -213,8 +220,8 @@ public class JournalsFragment extends Fragment implements JournalsContract.View 
             public ViewHolder(View itemView, JournalItemListener listener) {
                 super(itemView);
                 mItemListener = listener;
-                title = (TextView) itemView.findViewById(R.id.tv_jd_title);
-                description = (TextView) itemView.findViewById(R.id.tv_jd_description);
+                title = (TextView) itemView.findViewById(R.id.journal_detail_title);
+                description = (TextView) itemView.findViewById(R.id.journal_detail_description);
                 itemView.setOnClickListener(this);
             }
 
@@ -232,5 +239,4 @@ public class JournalsFragment extends Fragment implements JournalsContract.View 
 
         void onJournalClick(Journal clickedJournal);
     }
-
 }

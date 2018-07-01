@@ -24,7 +24,7 @@ public class ResetPasswordActivity extends AppCompatActivity implements ResetPas
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.reset_password_view);
+        setContentView(R.layout.activity_reset_password);
 
         mActionListener = new ResetPasswordPresenter(this);
 

@@ -60,7 +60,7 @@ public class SignUpFragment extends Fragment implements SignUpFragmentContract.V
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        mViewRoot = inflater.inflate(R.layout.signup_view, container, false);
+        mViewRoot = inflater.inflate(R.layout.fragment_sign_up, container, false);
 
 
         mUserEmail = mViewRoot.findViewById(R.id.et_s_login_user_id);

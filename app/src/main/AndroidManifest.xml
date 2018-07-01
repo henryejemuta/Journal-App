@@ -50,11 +50,10 @@
         <activity
             android:name=".journals.JournalsActivity"
             android:screenOrientation="portrait"
-            android:theme="@style/AppTheme.OverlapSystemBar"/>
+            android:theme="@style/AppTheme.NoActionBar"/>
         <activity
             android:name=".addjournal.AddJournalActivity"
-            android:screenOrientation="portrait"
-            android:theme="@style/AppTheme.OverlapSystemBar"/>
+            android:screenOrientation="portrait"/>
         <activity
             android:name=".journaldetails.JournalDetailActivity"
             android:screenOrientation="portrait"/>

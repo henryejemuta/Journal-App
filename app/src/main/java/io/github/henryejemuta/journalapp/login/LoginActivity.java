@@ -42,7 +42,7 @@ public class LoginActivity extends AppCompatActivity implements LoginContract.Vi
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.login_view);
+        setContentView(R.layout.activity_login);
 
         mFirebaseAuth = FirebaseAuth.getInstance();
         initGoogleSignInClient();

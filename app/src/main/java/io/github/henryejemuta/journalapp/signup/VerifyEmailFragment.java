@@ -58,7 +58,7 @@ public class VerifyEmailFragment extends Fragment implements VerifyEmailContract
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        View rootView = inflater.inflate(R.layout.verify_email_view, container, false);
+        View rootView = inflater.inflate(R.layout.fragment_verify_email, container, false);
 
 
         mEmailVerificationStatus = rootView.findViewById(R.id.tv_v_status);

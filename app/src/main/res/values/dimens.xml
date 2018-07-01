@@ -15,4 +15,7 @@
     <dimen name="google_font_size">14px</dimen>
     <dimen name="login_input_width">300dp</dimen>
 
+    <dimen name="nav_header_vertical_spacing">8dp</dimen>
+    <dimen name="nav_header_height">176dp</dimen>
+
 </resources>
